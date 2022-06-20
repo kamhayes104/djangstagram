@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm">
+            <div class="mb-2">
+                <img class="profile-pic rounded-circle" src="{% static post.user.profile.picture %}">
+                <span class="fw-bold">{{ post.user.username }}</span>
+            </div>
+            <div class="mb-2">
+                <img class="post-pic" src="{% static post.image %}">
+            </div>
+            <div>
+                <span class="fw-bold">{{ post.user.username }}</span>
+                {{ post.caption }}
+            </div>
+            <div class="fw-light">{{ post.timestamp }}</div>
+        </div>
+        <div class="col-sm">
+            <div>
+                <div class="mb-2">  
+                    <form method="post">
+                        {% csrf_token %}
+                        {% if user in post.likes.all %}
+                            <button type="submit" class="btn btn-outline-primary" name="like" value="unlike">Unlike</button>
+                        {% else %}
+                            <button type="submit" class="btn btn-primary" name="like" value="like">Like</button>
+                        {% endif %}              
+                        <span class="fw-bold">Likes: </span>{{ post.likes.count }}
+                    </form> 
+                </div>
+            </div>
+            <hr>
+            <div class="mb-2">
+                <h4 class="fw-bold">Comments: </h4>
+                {% if post.comments %}
+                    {% for comment in post.comments.all %}
+                        <div class="mb-2">
+                            <span class="fw-bold">{{ comment.user.username }}</span>
+                            {{ comment.content }}
+                        </div>
+                    {% endfor %}                 
+                {% endif %}
+            </div>
+            <div>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Add comment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

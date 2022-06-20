@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-4 w-50">
+    {% if not posts %}
+        <div class="text-center">
+            <h1>No posts here yet!</h1>
+            <p>Click on "All Profiles" to follow more profiles and see their posts.</p>
+        </div>
+    {% else %}
+        {% for post in posts %}
+            <div class="card m-4 post-card">
+                <div class="card card-rounded h-75">
+                    <div class="card-body">
+                        <div class="fw-bold ml-4 mb-2">
+                            <span class="rounded-circle"><img class="rounded-circle profile-pic" src="{% static post.user.profile.picture %}" alt=""></span>
+                            <span class="fw-bold">
+                                <a href="{% url 'profile_detail' post.user.profile.pk %}">{{ post.user.username }}</a>
+                            </span>
+                        </div>
+                        <div class="post-body">
+                            <img class="card-img-top post-img" src="{% static post.image %}" alt="">
+                        </div>
+                        <div class="m-2">
+                            <div class="mb-2">                     
+                                <span class="fw-bold">Likes: </span>{{ post.likes.count }}
+                            </div>
+                            {% if post.caption %}
+                            <div class="mb-2">
+                                <a href="{% url 'post_detail_view' post.pk %}"> 
+                                    <span class="fw-bold">{{ post.user.username }}</span>
+                                    <span class="fw-normal">{{ post.caption }}</span>
+                                </a>
+                            </div>
+                            {% endif %}
+                            <hr>
+                            <div class="mb-2">
+                                {% if post.comments.count > 0 %}
+                                    {% for comment in post.comments.all %}
+                                        <div>
+                                            <span class="fw-bold">{{ comment.user.username }}</span>
+                                            {{ comment.content }}
+                                        </div>
+                                    {% endfor %}  
+                                {% else %} 
+                                    <div>
+                                        <p>No comments yet...</p>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="fw-light">{{ post.timestamp }}</div>
+                        </div>
+                    </div>
+                </div>       
+            </div>
+        {% endfor %}
+    {% endif %}
+    </div>
+{% endblock content %}

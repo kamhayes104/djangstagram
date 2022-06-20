@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="text-center">
+        <h2>Success</h2>
+        <p>Your profile was successfully completed.</p>
+        <a href="{% url 'post_view' %}">Go home</a>
+    </div>
+</div>
+{% endblock content %}

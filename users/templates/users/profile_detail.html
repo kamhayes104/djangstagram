@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="col-md text-center">
+        <div class="mb-4">
+            <img class="detail-profile-pic rounded-circle mb-10" src="{% static profile.picture %}">
+        </div>
+        <div>
+            <h4 class="fw-bold">{{ profile.user.username }}</h4>
+        </div>
+        <div>
+            <h5 class="fw-light">{{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
+        </div>
+        <div class="mb-4">
+            <span class="m-2"><span class="fw-bold">{{ profile.followed_by.count }}</span> Followers</span> 
+            <span class="m-2"><span class="fw-bold">{{ profile.following.count }}</span> Following</span>
+            <span><span class="fw-bold" m-2>Joined </span>{{ date_joined }}</span>
+        </div>
+        <div class="mb-4">
+            {{ profile.bio }}
+        </div>
+        <div class="mb-5">
+            <form method="post">
+                {% csrf_token %}
+                {% if profile == user.profile %}
+                    <a class="btn btn-outline-primary" href="{% url 'edit_user' %}">Edit profile</a>
+                {% else %}
+                    {% if profile in user.profile.following.all %}
+                        <button type="submit" class="btn btn-outline-primary" name="follow" value="unfollow">Unfollow</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary ml-2" name="follow" value="follow">Follow</button>
+                    {% endif %}
+                {% endif %}
+            </form>
+        </div>
+        <div>
+            {% for post in posts %}
+                {% if forloop.first %}
+                    <div class="row">       
+                {% endif %}
+                        <div class="col-sm-4 profile-posts">
+                            <a href="{% url 'post_detail_view' post.pk %}"><img class="w-100 h-75" src="{% static post.image %}"></a>
+                        </div>
+                {% if forloop.counter|divisibleby:3 %}
+                    </div><div class="row">
+                {% endif %}
+                {% if forloop.last %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

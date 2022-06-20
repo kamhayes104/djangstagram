@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container m-4">
+    <h2 class="mb-4 text-center">Complete Profile</h2>
+    <div class="card card-rounded p-4">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create Profile" class="btn btn-primary">
+        </form>
+    </div> 
+</div>
+{% endblock content %}

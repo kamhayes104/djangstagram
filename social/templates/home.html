@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="carousel slide" id="djangstagramCarousel" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#djangstagramCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#djangstagramCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'IMG_6721.jpg' %}" alt="" class="d-block w-100 h-100">
+            <div class="carousel-caption">
+                <h1>Share your memories</h1>
+                <p>Show off your experiences to others, or experience theirs</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'IMG_5960.jpg' %}" alt="" class="d-block w-100 h-100">
+            <div class="carousel-caption">
+                <h1>Stay connected with family and friends</h1>
+                <p>Interact with the ones you know and love with posts and comments</p>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#djangstagramCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#djangstagramCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="text-center mt-4">
+    <h1>Join the community</h1>
+    <p>
+        <a href="{% url 'login' %}">Login</a>
+        to view posts or 
+        <a href="{% url 'sign_up' %}">create an account</a>.
+    </p>
+</div> 
+{% endblock content %}
